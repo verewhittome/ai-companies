@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>webextract — Clean, LLM-ready web content from any URL</title>
+  <meta name="description" content="webextract turns any web page into clean, LLM-ready markdown plus structured metadata and links. One API call. Built for RAG pipelines and AI agents." />
+  <meta property="og:title" content="webextract — Clean, LLM-ready web content from any URL" />
+  <meta property="og:description" content="Turn any URL into clean markdown + metadata in one API call. Built for RAG and AI agents." />
+  <meta property="og:type" content="website" />
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --panel: #12151c;
+      --panel-2: #171b24;
+      --border: #232838;
+      --text: #e7eaf0;
+      --muted: #99a2b3;
+      --accent: #6ea8fe;
+      --accent-2: #4ade80;
+      --code: #0e1117;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 0 24px; }
+    header { padding: 28px 0; border-bottom: 1px solid var(--border); }
+    .nav { display: flex; align-items: center; justify-content: space-between; }
+    .brand { font-weight: 700; font-size: 20px; letter-spacing: -0.02em; }
+    .brand span { color: var(--accent); }
+    .nav-links a { color: var(--muted); margin-left: 22px; font-size: 15px; }
+    .hero { padding: 72px 0 48px; }
+    .hero h1 { font-size: 44px; line-height: 1.1; letter-spacing: -0.03em; margin: 0 0 18px; }
+    .hero p.lede { font-size: 19px; color: var(--muted); max-width: 640px; margin: 0 0 28px; }
+    .cta { display: inline-block; background: var(--accent); color: #07111f; font-weight: 600; padding: 12px 22px; border-radius: 10px; }
+    .cta:hover { text-decoration: none; opacity: 0.92; }
+    .cta.secondary { background: transparent; color: var(--text); border: 1px solid var(--border); margin-left: 12px; }
+    section { padding: 44px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: 26px; letter-spacing: -0.02em; margin: 0 0 22px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+    .card h3 { margin: 0 0 8px; font-size: 17px; }
+    .card p { margin: 0; color: var(--muted); font-size: 15px; }
+    pre { background: var(--code); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; overflow-x: auto; font-size: 13.5px; }
+    code { font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; }
+    .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .pricing { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .plan { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; text-align: center; }
+    .plan.featured { border-color: var(--accent); }
+    .plan .price { font-size: 28px; font-weight: 700; margin: 8px 0; }
+    .plan .price small { font-size: 14px; color: var(--muted); font-weight: 400; }
+    .plan .quota { color: var(--muted); font-size: 14px; }
+    .faq dt { font-weight: 600; margin-top: 18px; }
+    .faq dd { margin: 6px 0 0; color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 32px 0 56px; color: var(--muted); font-size: 14px; }
+    footer .biz { color: var(--text); font-weight: 600; }
+    @media (max-width: 760px) {
+      .grid, .pricing, .cols { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 34px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand">web<span>extract</span></div>
+      <nav class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="mailto:vere@kaylie.ai">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <h1>Clean, LLM-ready web content<br />from any URL.</h1>
+      <p class="lede">
+        webextract is an API that turns messy web pages into clean markdown —
+        navigation, ads, cookie banners, and boilerplate stripped — plus
+        structured metadata and resolved links. One call. Built for RAG
+        pipelines and AI agents.
+      </p>
+      <a class="cta" href="#how">See how it works</a>
+      <a class="cta secondary" href="mailto:vere@kaylie.ai">Get an API key</a>
+    </div>
+
+    <section id="how">
+      <div class="wrap">
+        <h2>One request in, clean content out</h2>
+        <div class="cols">
+          <div>
+            <p style="color:var(--muted);margin-top:0">Request</p>
+            <pre><code>POST /extract
+Content-Type: application/json
+
+{
+  "url": "https://example.com/article",
+  "formats": ["markdown"],
+  "includeMetadata": true
+}</code></pre>
+          </div>
+          <div>
+            <p style="color:var(--muted);margin-top:0">Response</p>
+            <pre><code>{
+  "title": "The Real Headline",
+  "byline": "Jane Doe",
+  "wordCount": 1009,
+  "markdown": "Clean article text as\nmarkdown, ready for your model…",
+  "metadata": {
+    "siteName": "Example News",
+    "lang": "en",
+    "canonical": "https://example.com/article"
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>What you get</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Readability-grade markdown</h3>
+            <p>Main-content extraction via Mozilla Readability, converted to clean markdown your model can actually use.</p>
+          </div>
+          <div class="card">
+            <h3>Structured metadata</h3>
+            <p>Title, byline, description, OpenGraph image, language, canonical URL, and favicon — parsed for you.</p>
+          </div>
+          <div class="card">
+            <h3>Batch mode</h3>
+            <p>Extract up to 20 URLs in a single call. One bad URL never fails the whole batch.</p>
+          </div>
+          <div class="card">
+            <h3>Selector targeting</h3>
+            <p>Pass a CSS selector to narrow extraction to exactly the region you care about.</p>
+          </div>
+          <div class="card">
+            <h3>SSRF-hardened</h3>
+            <p>Private, loopback, and cloud-metadata addresses are refused — re-checked on every redirect hop.</p>
+          </div>
+          <div class="card">
+            <h3>Predictable &amp; fast</h3>
+            <p>Timeouts, size caps, and clean JSON errors. Priced for high-volume RAG and agent workloads.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="wrap">
+        <h2>Pricing</h2>
+        <div class="pricing">
+          <div class="plan">
+            <div>Basic</div>
+            <div class="price">$0<small>/mo</small></div>
+            <div class="quota">100 requests / mo</div>
+          </div>
+          <div class="plan featured">
+            <div>Pro</div>
+            <div class="price">$9<small>/mo</small></div>
+            <div class="quota">10,000 requests / mo</div>
+          </div>
+          <div class="plan">
+            <div>Ultra</div>
+            <div class="price">$29<small>/mo</small></div>
+            <div class="quota">50,000 requests / mo</div>
+          </div>
+          <div class="plan">
+            <div>Mega</div>
+            <div class="price">$99<small>/mo</small></div>
+            <div class="quota">250,000 requests / mo</div>
+          </div>
+        </div>
+        <p style="color:var(--muted);margin-top:18px">Per-request overage beyond plan quota. Cancel anytime.</p>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <h2>FAQ</h2>
+        <dl class="faq">
+          <dt>What does webextract sell?</dt>
+          <dd>A metered HTTP API. You send a URL; we return clean markdown and structured metadata for that page. Billing is per monthly request quota.</dd>
+          <dt>Who is it for?</dt>
+          <dd>Developers building retrieval-augmented generation (RAG) systems, AI agents, research tools, and content pipelines that need clean text from arbitrary web pages.</dd>
+          <dt>How do I get access?</dt>
+          <dd>Email <a href="mailto:vere@kaylie.ai">vere@kaylie.ai</a> for a direct API key, or subscribe via our API marketplace listing.</dd>
+          <dt>Do you store the pages I extract?</dt>
+          <dd>No. Pages are fetched, processed, and returned in the response. We do not retain page content.</dd>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p class="biz">webextract</p>
+      <p>
+        webextract is a product of <span id="legal-entity">Kaylie AI</span>.
+        Contact: <a href="mailto:vere@kaylie.ai">vere@kaylie.ai</a>.
+      </p>
+      <p>&copy; 2026 <span>Kaylie AI</span>. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
