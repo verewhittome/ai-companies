@@ -58,7 +58,10 @@
     .plan.featured { border-color: var(--accent); }
     .plan .price { font-size: 28px; font-weight: 700; margin: 8px 0; }
     .plan .price small { font-size: 14px; color: var(--muted); font-weight: 400; }
-    .plan .quota { color: var(--muted); font-size: 14px; }
+    .plan .quota { color: var(--muted); font-size: 14px; margin-bottom: 14px; }
+    .plan a.buy { display: inline-block; width: 100%; box-sizing: border-box; background: var(--panel-2); border: 1px solid var(--border); color: var(--text); padding: 9px 0; border-radius: 8px; font-weight: 600; font-size: 14px; }
+    .plan.featured a.buy { background: var(--accent); color: #07111f; border-color: var(--accent); }
+    .plan a.buy:hover { text-decoration: none; opacity: 0.9; }
     .faq dt { font-weight: 600; margin-top: 18px; }
     .faq dd { margin: 6px 0 0; color: var(--muted); }
     footer { border-top: 1px solid var(--border); padding: 32px 0 56px; color: var(--muted); font-size: 14px; }
@@ -91,8 +94,8 @@
         structured metadata and resolved links. One call. Built for RAG
         pipelines and AI agents.
       </p>
-      <a class="cta" href="#how">See how it works</a>
-      <a class="cta secondary" href="mailto:vere@kaylie.ai">Get an API key</a>
+      <a class="cta" href="#pricing">Get an API key</a>
+      <a class="cta secondary" href="#how">See how it works</a>
     </div>
 
     <section id="how">
@@ -168,21 +171,25 @@ Content-Type: application/json
             <div>Basic</div>
             <div class="price">$0<small>/mo</small></div>
             <div class="quota">100 requests / mo</div>
+            <a class="buy" href="mailto:vere@kaylie.ai?subject=webextract%20Basic%20access">Contact us</a>
           </div>
           <div class="plan featured">
             <div>Pro</div>
             <div class="price">$9<small>/mo</small></div>
             <div class="quota">10,000 requests / mo</div>
+            <a class="buy" href="https://webextract-api-kxu8.onrender.com/billing/checkout?plan=pro">Subscribe</a>
           </div>
           <div class="plan">
             <div>Ultra</div>
             <div class="price">$29<small>/mo</small></div>
             <div class="quota">50,000 requests / mo</div>
+            <a class="buy" href="https://webextract-api-kxu8.onrender.com/billing/checkout?plan=ultra">Subscribe</a>
           </div>
           <div class="plan">
             <div>Mega</div>
             <div class="price">$99<small>/mo</small></div>
             <div class="quota">250,000 requests / mo</div>
+            <a class="buy" href="https://webextract-api-kxu8.onrender.com/billing/checkout?plan=mega">Subscribe</a>
           </div>
         </div>
         <p style="color:var(--muted);margin-top:18px">Per-request overage beyond plan quota. Cancel anytime.</p>
