@@ -1,20 +1,40 @@
 # Launch checklist — what's needed to actually collect revenue
 
-## ✅ Live as of 2026-06-14
+## ✅ LIVE as of 2026-06-14
 
-- **Marketing site:** https://webextract-site.onrender.com (Render static site
-  `srv-d8nh2mnlk1mc739nsv2g`, auto-deploys from `main`, `site/` dir). Operated by
-  Kaylie AI. Use this URL for the Stripe "Business website" field and the
-  RapidAPI listing.
-- Keys provisioned in `.env`: `RENDER_API_KEY`, `NAMECHEAP_API_KEY`,
-  `RAPID_API_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_SECRET_KEY`.
+Business #1 (`webextract`) is deployed and can take money. Brand: **webextract**.
 
-### Still to do
-- Deploy the **API** as a Render web service (paid Starter, no cold start) before
-  RapidAPI listing.
-- Build the **Stripe billing layer** (key issuance + metering + checkout).
-- Publish the **RapidAPI listing** (copy ready in `rapidapi-listing.md`).
-- Optional: point a real domain (Namecheap) at the site + API.
+| Component | URL / ID | Status |
+|-----------|----------|--------|
+| Marketing site | https://webextract-site.onrender.com (`srv-d8nh2mnlk1mc739nsv2g`) | live, verified |
+| API | https://webextract-api-kxu8.onrender.com (`srv-d8nhjjurnols73dpj54g`, Starter) | live, verified |
+| Postgres | `dpg-d8nhmm67r5hc73arcksg-a` (basic_256mb) | available, connected |
+| Stripe catalog | Pro `price_1TiLTt…`, Ultra `price_1TiLTu…AdeB`, Mega `price_1TiLTu…nE7t` (LIVE) | created |
+| Stripe webhook | `we_1TiLUC…` → `/billing/webhook` | enabled |
+
+**Verified in production:** `/health` → `billing:enabled`; `/extract` returns
+clean markdown; auth enforced (proxy-secret/admin-key 200, bad key 401);
+`/billing/checkout?plan=pro` → real `cs_live_…` Stripe checkout URL; site
+Subscribe buttons point at live checkout. 9/9 unit tests pass.
+
+**The one UNVERIFIED link:** the post-payment chain (real card → webhook →
+key issuance → quota metering) has not been exercised, because the Stripe keys
+are LIVE-only — I won't charge a real card autonomously, and there are no
+test-mode keys. The code is unit-tested (webhook signature) and the metering SQL
+is atomic, but the full chain needs ONE of:
+  - drop `sk_test_…`/`pk_test_…` into `.env` and re-run `setup-catalog.ts` against
+    test mode, then complete a test checkout; OR
+  - make one real $9 Pro purchase (refundable) as a smoke test.
+
+### Remaining to reach customers
+1. **Publish the RapidAPI listing** — manual dashboard work, ~10 min. Exact steps
+   + live values in `rapidapi-listing.md`. This is the primary discovery channel.
+2. **Verify the payment chain** (above).
+3. **Optional:** custom domain via Namecheap (steps in `rapidapi-listing.md`).
+
+### Operational secrets (all in gitignored `.env`)
+`RAPIDAPI_PROXY_SECRET`, `WEBEXTRACT_API_KEYS` (admin), `STRIPE_WEBHOOK_SECRET`,
+`DATABASE_URL` (external; service uses internal), `STRIPE_PRICE_*`.
 
 ---
 
