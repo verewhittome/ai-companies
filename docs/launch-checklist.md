@@ -1,5 +1,24 @@
 # Launch checklist — what's needed to actually collect revenue
 
+## ✅ Live as of 2026-06-14
+
+- **Marketing site:** https://webextract-site.onrender.com (Render static site
+  `srv-d8nh2mnlk1mc739nsv2g`, auto-deploys from `main`, `site/` dir). Operated by
+  Kaylie AI. Use this URL for the Stripe "Business website" field and the
+  RapidAPI listing.
+- Keys provisioned in `.env`: `RENDER_API_KEY`, `NAMECHEAP_API_KEY`,
+  `RAPID_API_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_SECRET_KEY`.
+
+### Still to do
+- Deploy the **API** as a Render web service (paid Starter, no cold start) before
+  RapidAPI listing.
+- Build the **Stripe billing layer** (key issuance + metering + checkout).
+- Publish the **RapidAPI listing** (copy ready in `rapidapi-listing.md`).
+- Optional: point a real domain (Namecheap) at the site + API.
+
+---
+
+
 The product (`webextract`) is built, tested, and live-verified locally. It earns
 nothing until it's deployed behind a payment rail. An AI agent can build and
 operate the software autonomously; it **cannot** conjure a legal entity, a bank
