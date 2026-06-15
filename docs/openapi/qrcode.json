@@ -1,0 +1,25 @@
+{
+  "openapi": "3.0.0",
+  "info": { "title": "qrcode", "description": "Generate QR codes as PNG, SVG, or data URL with size, color, and error-correction options.", "version": "1.0.0" },
+  "servers": [{ "url": "https://qrcode-api-esh1.onrender.com" }],
+  "paths": {
+    "/generate": {
+      "get": {
+        "summary": "Generate a QR code",
+        "parameters": [
+          { "name": "data", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "format", "in": "query", "required": false, "schema": { "type": "string", "enum": ["png", "svg", "dataurl"], "default": "png" } },
+          { "name": "size", "in": "query", "required": false, "schema": { "type": "integer", "default": 300 } },
+          { "name": "ecc", "in": "query", "required": false, "schema": { "type": "string", "enum": ["L", "M", "Q", "H"] } }
+        ],
+        "responses": { "200": { "description": "QR code (image/png, image/svg+xml, or JSON data URL)" } }
+      },
+      "post": {
+        "summary": "Generate a QR code (JSON body)",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["data"], "properties": { "data": { "type": "string" }, "format": { "type": "string", "enum": ["png", "svg", "dataurl"] }, "size": { "type": "integer" }, "ecc": { "type": "string" } } }, "example": { "data": "https://toska.ai", "format": "png", "size": 300 } } } },
+        "responses": { "200": { "description": "QR code" } }
+      }
+    },
+    "/health": { "get": { "summary": "Health check", "responses": { "200": { "description": "ok" } } } }
+  }
+}

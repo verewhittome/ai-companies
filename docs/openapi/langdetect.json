@@ -1,0 +1,20 @@
+{
+  "openapi": "3.0.0",
+  "info": { "title": "langdetect", "description": "Detect the language of text with ranked candidates and ISO codes.", "version": "1.0.0" },
+  "servers": [{ "url": "https://langdetect-api.onrender.com" }],
+  "paths": {
+    "/detect": {
+      "post": {
+        "summary": "Detect the language of a text",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["text"], "properties": { "text": { "type": "string" } } }, "example": { "text": "Bonjour tout le monde, comment allez-vous ?" } } } },
+        "responses": { "200": { "description": "Detected language (language, iso639_1, iso639_3, reliable, candidates)" } }
+      },
+      "get": {
+        "summary": "Detect language (query form)",
+        "parameters": [{ "name": "text", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Detected language" } }
+      }
+    },
+    "/health": { "get": { "summary": "Health check", "responses": { "200": { "description": "ok" } } } }
+  }
+}

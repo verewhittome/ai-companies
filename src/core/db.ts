@@ -19,7 +19,9 @@ export function getPool(): pg.Pool {
     pool = new pg.Pool({
       connectionString: process.env.DATABASE_URL,
       ssl: { rejectUnauthorized: false }, // Render Postgres TLS
-      max: 5,
+      // Many services share one Postgres; keep each pool small to stay under
+      // the instance connection ceiling (10 products * 3 = 30).
+      max: 3,
     });
   }
   return pool;

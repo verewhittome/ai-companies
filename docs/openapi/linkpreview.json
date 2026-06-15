@@ -1,0 +1,20 @@
+{
+  "openapi": "3.0.0",
+  "info": { "title": "linkpreview", "description": "Unfurl any URL into a rich preview card: title, description, OG image, favicon, site name.", "version": "1.0.0" },
+  "servers": [{ "url": "https://linkpreview-api-ygfs.onrender.com" }],
+  "paths": {
+    "/preview": {
+      "post": {
+        "summary": "Generate a preview card for a URL",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["url"], "properties": { "url": { "type": "string" } } }, "example": { "url": "https://github.com" } } } },
+        "responses": { "200": { "description": "Preview (title, description, image, favicon, siteName, type)" } }
+      },
+      "get": {
+        "summary": "Generate a preview card (query form)",
+        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Preview card" } }
+      }
+    },
+    "/health": { "get": { "summary": "Health check", "responses": { "200": { "description": "ok" } } } }
+  }
+}

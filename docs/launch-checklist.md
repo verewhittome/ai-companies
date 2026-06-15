@@ -56,13 +56,35 @@ Endpoints: `GET/POST /validate`, `POST /batch`. Returns validity, E.164/national
 international/RFC3966 formats, country, calling code, line type, is_mobile.
 Verified live. Same one unverified link (real payment chain).
 
-## Portfolio summary
+## ALL 10 PRODUCTS LIVE — RapidAPI listing reference (2026-06-15)
 
-3 products live (webextract, emailcheck, phonecheck), all on the shared core,
-one Stripe account, one Postgres. Monthly infra ≈ $28 (3 Starter web services +
-Postgres; static sites free). **Revenue gated on RapidAPI listings (manual) +
-proving the payment chain once.** Roadmap remaining: #4 linkpreview, #5 geoip,
-#6 shotapi (headless, heavier).
+All on the shared core, one Stripe account ("Toska AI"), one Postgres. Each has a
+live Stripe catalog + webhook + metered direct checkout. OpenAPI specs for import
+are in `docs/openapi/<product>.json`.
+
+| Product | API base URL | Endpoints | Pricing (Pro/Ultra/Mega) | Tier |
+|---|---|---|---|---|
+| webextract | https://webextract-api-kxu8.onrender.com | POST /extract, /batch | $9/$29/$99 | Starter |
+| emailcheck | https://emailcheck-api.onrender.com | POST /validate, /batch | $12/$39/$99 | Starter |
+| phonecheck | https://phonecheck-api-ft15.onrender.com | POST /validate, /batch | $10/$35/$99 | Starter |
+| linkpreview | https://linkpreview-api-ygfs.onrender.com | GET/POST /preview | $8/$24/$79 | free |
+| uaparse | https://uaparse-api.onrender.com | GET/POST /parse | $8/$24/$79 | free |
+| langdetect | https://langdetect-api.onrender.com | GET/POST /detect | $9/$29/$99 | free |
+| fxrates | https://fxrates-api.onrender.com | GET /rates, /convert | $9/$29/$99 | free |
+| htmlclean | https://htmlclean-api.onrender.com | POST /sanitize | $9/$29/$99 | free |
+| qrcode | https://qrcode-api-esh1.onrender.com | GET/POST /generate | $7/$19/$59 | free |
+| profanity | https://profanity-api-vc7h.onrender.com | GET/POST /check | $9/$29/$99 | free |
+
+All Basic tiers are $0 / 100 calls/mo. Admin keys + per-service proxy secrets are
+in `.env` (`<PRODUCT>_ADMIN_KEY`, `<PRODUCT>_PROXY_SECRET`).
+
+⚠️ **Products #4–#10 run on Render's FREE tier and spin down when idle** (Render
+returns a "no-server" 404 for ~30–50s while waking). Functionally verified, but
+**upgrade each to Starter before publishing on RapidAPI** or RapidAPI's automated
+endpoint tests will intermittently fail. Bulk upgrade: PATCH each service's plan
+via the Render API (ask the agent to run it). Cost: +$7/mo per upgraded service.
+
+Monthly infra now ≈ $28 (3 Starter + Postgres); +$49/mo if all 7 move to Starter.
 
 **The one UNVERIFIED link:** the post-payment chain (real card → webhook →
 key issuance → quota metering) has not been exercised, because the Stripe keys

@@ -1,0 +1,20 @@
+{
+  "openapi": "3.0.0",
+  "info": { "title": "uaparse", "description": "Parse User-Agent strings into browser, OS, device, and bot flags.", "version": "1.0.0" },
+  "servers": [{ "url": "https://uaparse-api.onrender.com" }],
+  "paths": {
+    "/parse": {
+      "post": {
+        "summary": "Parse a User-Agent string",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["ua"], "properties": { "ua": { "type": "string" } } }, "example": { "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) Safari/604.1" } } } },
+        "responses": { "200": { "description": "Parsed UA (browser, engine, os, device, is_bot, is_mobile)" } }
+      },
+      "get": {
+        "summary": "Parse a User-Agent (query form; falls back to caller's UA)",
+        "parameters": [{ "name": "ua", "in": "query", "required": false, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Parsed UA" } }
+      }
+    },
+    "/health": { "get": { "summary": "Health check", "responses": { "200": { "description": "ok" } } } }
+  }
+}

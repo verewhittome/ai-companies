@@ -1,0 +1,34 @@
+{
+  "openapi": "3.0.0",
+  "info": { "title": "fxrates", "description": "Live currency exchange rates and conversion, sourced from the European Central Bank.", "version": "1.0.0" },
+  "servers": [{ "url": "https://fxrates-api.onrender.com" }],
+  "paths": {
+    "/rates": {
+      "get": {
+        "summary": "Get exchange rates for a base currency",
+        "parameters": [
+          { "name": "base", "in": "query", "required": false, "schema": { "type": "string", "default": "EUR" } },
+          { "name": "symbols", "in": "query", "required": false, "schema": { "type": "string" }, "description": "Comma-separated currency codes, e.g. USD,GBP,JPY" }
+        ],
+        "responses": { "200": { "description": "{ base, date, rates }" } }
+      }
+    },
+    "/convert": {
+      "get": {
+        "summary": "Convert an amount between currencies",
+        "parameters": [
+          { "name": "from", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "to", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "amount", "in": "query", "required": true, "schema": { "type": "number" } }
+        ],
+        "responses": { "200": { "description": "{ from, to, amount, result, date }" } }
+      },
+      "post": {
+        "summary": "Convert an amount (JSON body)",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["from", "to", "amount"], "properties": { "from": { "type": "string" }, "to": { "type": "string" }, "amount": { "type": "number" } } }, "example": { "from": "USD", "to": "GBP", "amount": 100 } } } },
+        "responses": { "200": { "description": "Conversion result" } }
+      }
+    },
+    "/health": { "get": { "summary": "Health check", "responses": { "200": { "description": "ok" } } } }
+  }
+}

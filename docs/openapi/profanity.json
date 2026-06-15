@@ -1,0 +1,20 @@
+{
+  "openapi": "3.0.0",
+  "info": { "title": "profanity", "description": "Detect and censor profanity for content moderation, with leetspeak handling and severity scoring.", "version": "1.0.0" },
+  "servers": [{ "url": "https://profanity-api-vc7h.onrender.com" }],
+  "paths": {
+    "/check": {
+      "post": {
+        "summary": "Check text for profanity",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["text"], "properties": { "text": { "type": "string" }, "censorChar": { "type": "string" } } }, "example": { "text": "this is a damn good API" } } } },
+        "responses": { "200": { "description": "{ is_profane, count, matches, severity, censored }" } }
+      },
+      "get": {
+        "summary": "Check text for profanity (query form)",
+        "parameters": [{ "name": "text", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Moderation result" } }
+      }
+    },
+    "/health": { "get": { "summary": "Health check", "responses": { "200": { "description": "ok" } } } }
+  }
+}

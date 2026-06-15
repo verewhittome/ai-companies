@@ -1,0 +1,15 @@
+{
+  "openapi": "3.0.0",
+  "info": { "title": "htmlclean", "description": "Sanitize untrusted HTML and strip XSS vectors. Profiles: default, basic, strict.", "version": "1.0.0" },
+  "servers": [{ "url": "https://htmlclean-api.onrender.com" }],
+  "paths": {
+    "/sanitize": {
+      "post": {
+        "summary": "Sanitize HTML",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["html"], "properties": { "html": { "type": "string" }, "profile": { "type": "string", "enum": ["default", "basic", "strict"] } } }, "example": { "html": "<p>Hi</p><script>alert(1)</script>", "profile": "default" } } } },
+        "responses": { "200": { "description": "{ clean, profile, original_length, clean_length, removed_chars }" } }
+      }
+    },
+    "/health": { "get": { "summary": "Health check", "responses": { "200": { "description": "ok" } } } }
+  }
+}
