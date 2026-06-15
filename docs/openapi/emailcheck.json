@@ -1,0 +1,66 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "emailcheck",
+    "description": "Real-time email validation: syntax, MX/DNS deliverability, disposable/role/free-provider detection, typo suggestions, and a 0-1 quality score.",
+    "version": "1.0.0"
+  },
+  "servers": [{ "url": "https://emailcheck-api.onrender.com" }],
+  "paths": {
+    "/validate": {
+      "post": {
+        "summary": "Validate a single email address",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": { "type": "string" },
+                  "skipMx": { "type": "boolean", "description": "Skip DNS/MX lookup for a faster syntax-only check" }
+                }
+              },
+              "example": { "email": "someone@example.com" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Validation result (valid_syntax, deliverable, is_disposable, did_you_mean, score, ...)" } }
+      },
+      "get": {
+        "summary": "Validate a single email address (query form)",
+        "parameters": [
+          { "name": "email", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "skipMx", "in": "query", "required": false, "schema": { "type": "boolean" } }
+        ],
+        "responses": { "200": { "description": "Validation result" } }
+      }
+    },
+    "/batch": {
+      "post": {
+        "summary": "Validate up to 100 emails in one call",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["emails"],
+                "properties": {
+                  "emails": { "type": "array", "items": { "type": "string" }, "maxItems": 100 },
+                  "skipMx": { "type": "boolean" }
+                }
+              },
+              "example": { "emails": ["a@gmail.com", "x@mailinator.com"] }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Array of validation results" } }
+      }
+    },
+    "/health": {
+      "get": { "summary": "Health check", "responses": { "200": { "description": "Service status" } } }
+    }
+  }
+}

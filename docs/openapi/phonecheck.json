@@ -1,0 +1,66 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "phonecheck",
+    "description": "Validate and format phone numbers worldwide (Google libphonenumber): validity, E.164/national/international formats, country, calling code, and line type.",
+    "version": "1.0.0"
+  },
+  "servers": [{ "url": "https://phonecheck-api-ft15.onrender.com" }],
+  "paths": {
+    "/validate": {
+      "post": {
+        "summary": "Validate and format a phone number",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["phone"],
+                "properties": {
+                  "phone": { "type": "string" },
+                  "country": { "type": "string", "description": "ISO 3166-1 alpha-2 hint for national-format numbers, e.g. GB" }
+                }
+              },
+              "example": { "phone": "+14155552671" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Result (valid, e164, national, international, country, type, is_mobile, ...)" } }
+      },
+      "get": {
+        "summary": "Validate a phone number (query form)",
+        "parameters": [
+          { "name": "phone", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "country", "in": "query", "required": false, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Validation result" } }
+      }
+    },
+    "/batch": {
+      "post": {
+        "summary": "Validate up to 100 phone numbers in one call",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["phones"],
+                "properties": {
+                  "phones": { "type": "array", "items": { "type": "string" }, "maxItems": 100 },
+                  "country": { "type": "string" }
+                }
+              },
+              "example": { "phones": ["+14155552671", "020 7946 0958"], "country": "GB" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Array of validation results" } }
+      }
+    },
+    "/health": {
+      "get": { "summary": "Health check", "responses": { "200": { "description": "Service status" } } }
+    }
+  }
+}
