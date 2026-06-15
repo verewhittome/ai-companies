@@ -4,3 +4,7 @@ dist/
 data/
 *.log
 .DS_Store
+
+.playwright-mcp/
+*.jpeg
+*-proxy-secret.txt
