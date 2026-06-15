@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>emailcheck — Real-time email validation API</title>
+  <meta name="description" content="Validate emails in one API call: syntax, MX/DNS deliverability, disposable-domain and role-account detection, typo suggestions, and a quality score." />
+  <meta property="og:title" content="emailcheck — Real-time email validation API" />
+  <meta property="og:description" content="Validate emails in one API call: deliverability, disposable detection, typo suggestions, quality score." />
+  <style>
+    :root{--bg:#0b0d12;--panel:#12151c;--panel-2:#171b24;--border:#232838;--text:#e7eaf0;--muted:#99a2b3;--accent:#4ade80;--code:#0e1117;--radius:12px}
+    *{box-sizing:border-box}html,body{margin:0;padding:0}
+    body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+    a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+    .wrap{max-width:920px;margin:0 auto;padding:0 24px}
+    header{padding:28px 0;border-bottom:1px solid var(--border)}
+    .nav{display:flex;align-items:center;justify-content:space-between}
+    .brand{font-weight:700;font-size:20px;letter-spacing:-.02em}.brand span{color:var(--accent)}
+    .nav-links a{color:var(--muted);margin-left:22px;font-size:15px}
+    .hero{padding:72px 0 48px}.hero h1{font-size:44px;line-height:1.1;letter-spacing:-.03em;margin:0 0 18px}
+    .hero p.lede{font-size:19px;color:var(--muted);max-width:640px;margin:0 0 28px}
+    .cta{display:inline-block;background:var(--accent);color:#06140b;font-weight:600;padding:12px 22px;border-radius:10px}
+    .cta:hover{text-decoration:none;opacity:.92}.cta.secondary{background:transparent;color:var(--text);border:1px solid var(--border);margin-left:12px}
+    section{padding:44px 0;border-top:1px solid var(--border)}h2{font-size:26px;letter-spacing:-.02em;margin:0 0 22px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+    .card h3{margin:0 0 8px;font-size:17px}.card p{margin:0;color:var(--muted);font-size:15px}
+    pre{background:var(--code);border:1px solid var(--border);border-radius:var(--radius);padding:18px;overflow-x:auto;font-size:13.5px}
+    code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace}
+    .cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .pricing{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .plan{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center}
+    .plan.featured{border-color:var(--accent)}.plan .price{font-size:28px;font-weight:700;margin:8px 0}
+    .plan .price small{font-size:14px;color:var(--muted);font-weight:400}.plan .quota{color:var(--muted);font-size:14px;margin-bottom:14px}
+    .plan a.buy{display:inline-block;width:100%;box-sizing:border-box;background:var(--panel-2);border:1px solid var(--border);color:var(--text);padding:9px 0;border-radius:8px;font-weight:600;font-size:14px}
+    .plan.featured a.buy{background:var(--accent);color:#06140b;border-color:var(--accent)}.plan a.buy:hover{text-decoration:none;opacity:.9}
+    .faq dt{font-weight:600;margin-top:18px}.faq dd{margin:6px 0 0;color:var(--muted)}
+    footer{border-top:1px solid var(--border);padding:32px 0 56px;color:var(--muted);font-size:14px}footer .biz{color:var(--text);font-weight:600}
+    @media(max-width:760px){.grid,.pricing,.cols{grid-template-columns:1fr}.hero h1{font-size:34px}}
+  </style>
+</head>
+<body>
+  <header><div class="wrap nav">
+    <div class="brand">email<span>check</span></div>
+    <nav class="nav-links"><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="mailto:vere@kaylie.ai">Contact</a></nav>
+  </div></header>
+
+  <main>
+    <div class="wrap hero">
+      <h1>Real-time email validation<br />in one API call.</h1>
+      <p class="lede">Stop junk signups and bounced campaigns. emailcheck verifies syntax, checks MX/DNS deliverability, flags disposable and role addresses, catches typos, and returns a quality score — instantly.</p>
+      <a class="cta" href="#pricing">Get an API key</a>
+      <a class="cta secondary" href="#how">See how it works</a>
+    </div>
+
+    <section id="how"><div class="wrap">
+      <h2>One request in, a verdict out</h2>
+      <div class="cols">
+        <div><p style="color:var(--muted);margin-top:0">Request</p>
+          <pre><code>POST /validate
+Content-Type: application/json
+
+{ "email": "John.Doe+ad@gmial.com" }</code></pre></div>
+        <div><p style="color:var(--muted);margin-top:0">Response</p>
+          <pre><code>{
+  "valid_syntax": true,
+  "domain": "gmial.com",
+  "is_disposable": false,
+  "is_role": false,
+  "has_mx": false,
+  "did_you_mean": "gmail.com",
+  "deliverable": false,
+  "score": 0.0
+}</code></pre></div>
+      </div>
+    </div></section>
+
+    <section><div class="wrap">
+      <h2>What you get</h2>
+      <div class="grid">
+        <div class="card"><h3>Deliverability</h3><p>Live MX/DNS lookup tells you whether the domain can actually receive mail.</p></div>
+        <div class="card"><h3>Disposable detection</h3><p>Flags temporary/burner mailbox domains that pollute your list.</p></div>
+        <div class="card"><h3>Role accounts</h3><p>Identifies shared inboxes like info@ and support@ that hurt deliverability.</p></div>
+        <div class="card"><h3>Typo suggestions</h3><p>"did you mean gmail.com" — recover customers who fat-finger their address.</p></div>
+        <div class="card"><h3>Normalization</h3><p>Gmail-aware canonical form so you can dedupe dots and +tags.</p></div>
+        <div class="card"><h3>Batch + score</h3><p>Validate up to 100 at once; get a 0-1 quality score per address.</p></div>
+      </div>
+    </div></section>
+
+    <section id="pricing"><div class="wrap">
+      <h2>Pricing</h2>
+      <div class="pricing">
+        <div class="plan"><div>Basic</div><div class="price">$0<small>/mo</small></div><div class="quota">100 checks / mo</div><a class="buy" href="mailto:vere@kaylie.ai?subject=emailcheck%20Basic">Contact us</a></div>
+        <div class="plan featured"><div>Pro</div><div class="price">$12<small>/mo</small></div><div class="quota">5,000 checks / mo</div><a class="buy" href="https://emailcheck-api.onrender.com/billing/checkout?plan=pro">Subscribe</a></div>
+        <div class="plan"><div>Ultra</div><div class="price">$39<small>/mo</small></div><div class="quota">25,000 checks / mo</div><a class="buy" href="https://emailcheck-api.onrender.com/billing/checkout?plan=ultra">Subscribe</a></div>
+        <div class="plan"><div>Mega</div><div class="price">$99<small>/mo</small></div><div class="quota">100,000 checks / mo</div><a class="buy" href="https://emailcheck-api.onrender.com/billing/checkout?plan=mega">Subscribe</a></div>
+      </div>
+      <p style="color:var(--muted);margin-top:18px">Per-check overage beyond plan quota. Cancel anytime.</p>
+    </div></section>
+
+    <section id="faq"><div class="wrap">
+      <h2>FAQ</h2>
+      <dl class="faq">
+        <dt>What does emailcheck sell?</dt><dd>A metered HTTP API. You send an email address; we return a structured validation verdict. Billing is per monthly request quota.</dd>
+        <dt>Do you send email to verify?</dt><dd>No. We check syntax, classification, and MX/DNS records — no SMTP probing, so we never message the address.</dd>
+        <dt>How do I get access?</dt><dd>Subscribe above for a direct API key, or find us on the RapidAPI marketplace.</dd>
+        <dt>Do you store the addresses I check?</dt><dd>No. Addresses are validated in-request and not retained.</dd>
+      </dl>
+    </div></section>
+  </main>
+
+  <footer><div class="wrap">
+    <p class="biz">emailcheck</p>
+    <p>Real-time email validation for signup forms, CRMs, and campaigns. Contact: <a href="mailto:vere@kaylie.ai">vere@kaylie.ai</a>.</p>
+    <p>&copy; 2026 emailcheck. All rights reserved.</p>
+  </div></footer>
+</body>
+</html>
