@@ -17,6 +17,29 @@ clean markdown; auth enforced (proxy-secret/admin-key 200, bad key 401);
 `/billing/checkout?plan=pro` → real `cs_live_…` Stripe checkout URL; site
 Subscribe buttons point at live checkout. 9/9 unit tests pass.
 
+## ✅ Product #2: emailcheck (LIVE as of 2026-06-15)
+
+Email validation API on the shared core. Brand: **emailcheck**.
+
+| Component | URL / ID | Status |
+|-----------|----------|--------|
+| Site | https://emailcheck-site.onrender.com (`srv-d8nr5r67r5hc73b4jepg`) | live |
+| API | https://emailcheck-api.onrender.com (`srv-d8nr518js32c73e0ijgg`, Starter) | live, verified |
+| Postgres | shared `dpg-d8nhmm67r5hc73arcksg-a` (product-scoped keys) | connected |
+| Stripe catalog | Pro/Ultra/Mega (LIVE, $12/$39/$99) | created |
+| Stripe webhook | `we_1TiVXw…` → emailcheck `/billing/webhook` | enabled |
+
+Endpoints: `GET/POST /validate`, `POST /batch`. Returns syntax, gmail-normalized
+form, MX deliverability, disposable/role/free flags, `did_you_mean`, score.
+Verified live: clean gmail → deliverable 0.90; checkout → `cs_live_…`. Same one
+unverified link as webextract (real payment → webhook → key issuance).
+
+**Architecture:** `src/core/` is now a reusable multi-product platform
+(product-scoped Postgres keys, Stripe billing factory, 3-rail auth, service
+assembler, catalog helper). New products (#3 phonecheck, #4 linkpreview, …) are
+~1 day each: write logic + `config.ts` + thin `server.ts`, run the catalog
+script, create a Render service + webhook, wire env.
+
 **The one UNVERIFIED link:** the post-payment chain (real card → webhook →
 key issuance → quota metering) has not been exercised, because the Stripe keys
 are LIVE-only — I won't charge a real card autonomously, and there are no
