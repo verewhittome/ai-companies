@@ -11,10 +11,10 @@ export const phonecheckConfig: ProductConfig = {
   displayName: "phonecheck",
   version: "1.0.0",
   plans,
-  apiBaseUrl: () => process.env.API_BASE_URL ?? "https://phonecheck-api.onrender.com",
+  apiBaseUrl: () => process.env.API_BASE_URL ?? "https://phonecheck-api-ft15.onrender.com",
   siteUrl: () => process.env.SITE_URL ?? "https://phonecheck-site.onrender.com",
   quickstart: (apiKey) =>
-    `<pre>curl -X POST "${process.env.API_BASE_URL ?? "https://phonecheck-api.onrender.com"}/validate" \\
+    `<pre>curl -X POST "${process.env.API_BASE_URL ?? "https://phonecheck-api-ft15.onrender.com"}/validate" \\
   -H "X-API-Key: ${apiKey}" \\
   -H "Content-Type: application/json" \\
   -d '{"phone":"+14155552671"}'</pre>`,
