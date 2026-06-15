@@ -14,7 +14,7 @@
     "dev": "tsx src/run-experiment.ts",
     "serve": "tsx src/webextract/server.ts",
     "start": "node dist/webextract/server.js",
-    "test": "node --import tsx --test \"src/webextract/*.test.ts\" \"src/webextract/billing/*.test.ts\""
+    "test": "node --import tsx --test \"src/webextract/*.test.ts\" \"src/core/*.test.ts\" \"src/emailcheck/*.test.ts\""
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.88.0",
