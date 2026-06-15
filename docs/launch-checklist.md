@@ -40,6 +40,30 @@ assembler, catalog helper). New products (#3 phonecheck, #4 linkpreview, …) ar
 ~1 day each: write logic + `config.ts` + thin `server.ts`, run the catalog
 script, create a Render service + webhook, wire env.
 
+## ✅ Product #3: phonecheck (LIVE as of 2026-06-15)
+
+Phone validation/formatting API (Google libphonenumber, offline). Brand: **phonecheck**.
+
+| Component | URL / ID | Status |
+|-----------|----------|--------|
+| Site | https://phonecheck-site.onrender.com (`srv-d8nr5r... static`) | live |
+| API | https://phonecheck-api-ft15.onrender.com (`srv-d8nrbkurnols73e3q50g`, Starter) | live, verified |
+| Postgres | shared `dpg-d8nhmm67r5hc73arcksg-a` | connected |
+| Stripe catalog | Pro/Ultra/Mega (LIVE, $10/$35/$99) | created |
+| Stripe webhook | `we_1TiVl4…` → phonecheck `/billing/webhook` | enabled |
+
+Endpoints: `GET/POST /validate`, `POST /batch`. Returns validity, E.164/national/
+international/RFC3966 formats, country, calling code, line type, is_mobile.
+Verified live. Same one unverified link (real payment chain).
+
+## Portfolio summary
+
+3 products live (webextract, emailcheck, phonecheck), all on the shared core,
+one Stripe account, one Postgres. Monthly infra ≈ $28 (3 Starter web services +
+Postgres; static sites free). **Revenue gated on RapidAPI listings (manual) +
+proving the payment chain once.** Roadmap remaining: #4 linkpreview, #5 geoip,
+#6 shotapi (headless, heavier).
+
 **The one UNVERIFIED link:** the post-payment chain (real card → webhook →
 key issuance → quota metering) has not been exercised, because the Stripe keys
 are LIVE-only — I won't charge a real card autonomously, and there are no
