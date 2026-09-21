@@ -1,0 +1,8 @@
+{
+  "$schema": "https://api.thecompany.company/schemas/v1/environment.json",
+  "scripts": {
+    "install": {
+      "command": "npm install"
+    }
+  }
+}
